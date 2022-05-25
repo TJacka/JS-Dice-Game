@@ -15,6 +15,7 @@ const resetBtn = document.getElementById("resetBtn")
 function showResetButton() {
     rollBtn.style.display = "none"
     resetBtn.style.display = "block"
+    doubleBtn.style.display = "none"
 }
 
 /* Hook up a click event listener to the Roll Dice Button. */
@@ -62,6 +63,37 @@ function reset() {
     message.textContent = "Player 1 Turn"
     resetBtn.style.display = "none"
     rollBtn.style.display = "block"
+    doubleBtn.style.display = "block"
     player2Dice.classList.remove("active")
     player1Dice.classList.add("active")
 }
+
+doubleBtn.addEventListener("click", function() {
+    const randomNumber = Math.floor(Math.random() * 6) + 1
+    const doubleOrNothing = Math.floor(Math.random() * 2);
+
+    if (player1Turn) {
+        player1Score += doubleOrNothing * (randomNumber * 2)
+        player1Scoreboard.textContent = player1Score
+        player1Dice.textContent = doubleOrNothing * (randomNumber * 2)
+        player1Dice.classList.remove("active")
+        player2Dice.classList.add("active")
+        message.textContent = "Player 2 Turn"
+    } else {
+        player2Score += doubleOrNothing * (randomNumber * 2)
+        player2Scoreboard.textContent = player2Score
+        player2Dice.textContent = doubleOrNothing * (randomNumber * 2)
+        player2Dice.classList.remove("active")
+        player1Dice.classList.add("active")
+        message.textContent = "Player 1 Turn"
+    }
+    
+    if (player1Score >= 20) {
+        message.textContent = "Player 1 Won 🥳"
+        showResetButton()
+    }  else if (player2Score >= 20) {
+        message.textContent = "Player 2 Won 🎉"
+        showResetButton()
+    }
+    player1Turn = !player1Turn
+})
