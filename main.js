@@ -1,17 +1,20 @@
 // Create variables for the game state
 let player1Score = 0
 let player2Score = 0
+var turn = (Math.floor(Math.random() * 2));
 
-function playerTurn() {
-    let turn = (Math.floor(Math.random() * 2));
+function playerTurn() {   
+    
     if (turn) {
-        player2Dice.classList.remove("active")
-        player1Dice.classList.add("active")
-        return 1;
-    } else {
-        player2Dice.classList.add("active")
         player1Dice.classList.remove("active")
+        player2Dice.classList.add("active")
+        message.textContent = `Player 2 Turn`
         return 2;
+    } else {
+        player1Dice.classList.add("active")
+        player2Dice.classList.remove("active")
+        message.textContent = `Player 1 Turn`
+        return 1;
     }
 } 
 
@@ -35,15 +38,14 @@ function showResetButton() {
 /* Hook up a click event listener to the Roll Dice Button. */
  rollBtn.addEventListener("click", function() {
     const randomNumber = Math.floor(Math.random() * 6) + 1
-
-    if (playerTurn) {
+    if (!turn) {
         player1Score += randomNumber
         player1Scoreboard.textContent = player1Score
         player1Dice.textContent = randomNumber
         player1Dice.classList.remove("active")
         player2Dice.classList.add("active")
         message.textContent = "Player 2 Turn"
-    } else {
+    } else if (turn) {
         player2Score += randomNumber
         player2Scoreboard.textContent = player2Score
         player2Dice.textContent = randomNumber
@@ -59,21 +61,21 @@ function showResetButton() {
         message.textContent = "Player 2 Won 🎉"
         showResetButton()
     }
-    playerTurn = !playerTurn
+    turn = !turn
 })
 
 doubleBtn.addEventListener("click", function() {
     const randomNumber = Math.floor(Math.random() * 6) + 1
     const doubleOrNothing = Math.floor(Math.random() * 2);
 
-    if (playerTurn) {
+    if (!turn) {
         player1Score += doubleOrNothing * (randomNumber * 2)
         player1Scoreboard.textContent = player1Score
         player1Dice.textContent = doubleOrNothing * (randomNumber * 2)
         player1Dice.classList.remove("active")
         player2Dice.classList.add("active")
         message.textContent = "Player 2 Turn"
-    } else {
+    } else if (turn) {
         player2Score += doubleOrNothing * (randomNumber * 2)
         player2Scoreboard.textContent = player2Score
         player2Dice.textContent = doubleOrNothing * (randomNumber * 2)
@@ -85,11 +87,15 @@ doubleBtn.addEventListener("click", function() {
     if (player1Score >= 20) {
         message.textContent = "Player 1 Won 🥳"
         showResetButton()
+        player1Dice.classList.remove("active")
+        player2Dice.classList.remove("active")
     }  else if (player2Score >= 20) {
         message.textContent = "Player 2 Won 🎉"
         showResetButton()
+        player1Dice.classList.remove("active")
+        player2Dice.classList.remove("active")
     }
-    playerTurn = !playerTurn
+    turn = !turn
 })
 
 resetBtn.addEventListener("click", function(){
@@ -97,10 +103,10 @@ resetBtn.addEventListener("click", function(){
 })
 
 function reset() {
-    if (playerTurn == false) {
-        message.textContent = `Player 2 Turn`
-    } else {
+    if (playerTurn) {
         message.textContent = `Player 1 Turn`
+    } else {
+        message.textContent = `Player 2 Turn`
     }
     player1Score = 0
     player2Score = 0
