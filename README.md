@@ -6,7 +6,7 @@
   
 <img src="https://i.ibb.co/5rwSNG5/desktop.jpg" alt="desktop" border="0">
 
-<br>
+<br><br>
 
 **Link to live project:** https://tjacka.github.io/JS-Dice-Game/
   
