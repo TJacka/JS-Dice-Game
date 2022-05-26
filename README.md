@@ -4,7 +4,7 @@
 
 <br>
 
-**Link to live project:** <a href="https://tjacka.github.io/JS-Dice-Game/" target="_blank" />
+  **Link to live project:** <a href="https://tjacka.github.io/JS-Dice-Game/" target="_blank"></a>
 
 <br>
   
